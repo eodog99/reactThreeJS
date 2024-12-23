@@ -13,6 +13,10 @@ function Cube() {
     if (cubeRef.current) {
       cubeRef.current.rotation.x += 0.01;
       cubeRef.current.rotation.y += 0.01;
+
+      // 이동 (x축을 따라 시간에 따라 이동)
+      cubeRef.current.position.x = Math.sin(cubeRef.current.rotation.x) * 2;
+      cubeRef.current.position.y = Math.cos(cubeRef.current.rotation.y) * 2;
     }
   });
 

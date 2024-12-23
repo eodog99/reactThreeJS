@@ -67,6 +67,7 @@ function Map() {
         directionalLight.position.set(0.5, -1, 0.5);
         scene.add(directionalLight);
 
+       
         loader = new FBXLoader(); // FBX 모델 로더 설정
         const source = process.env.PUBLIC_URL + '/fbx/kid2.fbx'; // FBX 모델 경로
         loader.load(source, fbx => {  // FBX 모델 로드

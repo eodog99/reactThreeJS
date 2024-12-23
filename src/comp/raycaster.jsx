@@ -1,7 +1,6 @@
 import { useEffect, useRef } from 'react';
 import * as THREE from 'three';
 import { PointerLockControls } from 'three/examples/jsm/controls/PointerLockControls';
-import  "./css/style.css";
 
 
 
@@ -22,7 +21,9 @@ function Player() {
   let moveRight = false;
   let canJump = false;
 
-  let prevTime = performance.now();
+  // performance.now() : 마이크로초 단위의 짧은 시간 간격을 측정하는데 유용하다.
+  // Three.js에서는 실시간 렌더링 환경에서 시간 간격을 정확하게 계산하고 애니메이션의 속도나 움직임을 제어하는 데 유용하다.
+  let prevTime = performance.now(); 
   const velocity = new THREE.Vector3();
   const direction = new THREE.Vector3();
   const vertex = new THREE.Vector3();

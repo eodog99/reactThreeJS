@@ -11,11 +11,35 @@ function FBXModelLoader() {
         const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
         const renderer = new THREE.WebGLRenderer({ canvas: canvasRef.current, antialias: true });
         renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.shadowMap.enabled = true;
+        renderer.shadowMap.type = THREE.PCFShadowMap;
         document.body.appendChild(renderer.domElement);
+    // 조명 추가: 기본 Ambient Light
+      const AmbientLight = new THREE.AmbientLight(0xffffff, 200, 100); // Ambient Light 추가
+      AmbientLight.position.set(5,10,5);
+      scene.add(AmbientLight);
 
         // 조명 추가: 기본 Ambient Light
-        const ambientLight = new THREE.AmbientLight(0xffffff, 3); // Ambient Light 추가
-        scene.add(ambientLight);
+        const Light = new THREE.PointLight(0xffffff, 100, 17); // Ambient Light 추가
+        Light.position.set(5,10,5);
+        Light.castShadow = true;
+        scene.add(Light);
+
+        // 바닥 생성 및 텍스처 적용
+        const textureLoader = new THREE.TextureLoader();
+        const floorTexture = textureLoader.load('/textures/hardwood2_diffuse.jpg');  // 텍스처 경로에 맞게 수정
+
+        const floorMaterial = new THREE.MeshStandardMaterial({
+            map: floorTexture,  // 텍스처 적용
+            roughness: 0.6,
+            metalness: 0.2,
+        });
+
+        const floorGeometry = new THREE.PlaneGeometry(10, 20, 200);  // 바닥 크기 설정
+        const floor = new THREE.Mesh(floorGeometry, floorMaterial);
+        floor.rotation.x = -Math.PI / 2;  // 바닥이 수평이 되도록 회전
+        floor.receiveShadow = true;
+        scene.add(floor);
 
         //FBXLoader 설정
         const loader = new FBXLoader();
@@ -29,12 +53,15 @@ function FBXModelLoader() {
 
                 //모델의 위치 및 크기 조정(필요시, 생략가능)
                 object.position.set(0, 0, 0);
-                object.scale.set(0.01, 0.01, 0.01); // FBX 모델 크기가 너무 크거나 작으면 조정
+                object.scale.set(0.01, 0.01, 0.01); // FBX 모델 크기 조정
+                object.castShadow = true;
             }
         );
 
          // 카메라 위치 설정
-    camera.position.z = 5;
+        camera.position.x = 1;
+        camera.position.y = 2;
+        camera.position.z = 5;
 
     // OrbitControls 설정 (선택 사항)
     const controls = new OrbitControls(camera, renderer.domElement);

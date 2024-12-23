@@ -6,7 +6,7 @@ function Light7() {
 
   const selectCanvas3D = useRef();
   let camera, scene, renderer, light;
-  let cubeMat, floorMat;
+  let cubeMat, floorMat, material;
 
   let previousShadowMap = false;
 
@@ -74,7 +74,7 @@ function Light7() {
 
     scene.add(light);
 
-
+    
     floorMat = new THREE.MeshStandardMaterial({
       roughness: 0.8,
       color: 0xffffff,
@@ -137,6 +137,11 @@ function Light7() {
       roughness: 0.5,
       matalness: 1.0,
     });
+const cylinder = new THREE.CylinderGeometry(0.5, 0.8, 1, 10);
+const cylinderMesh = new THREE.Mesh(cylinder , boxMat)
+scene.add(cylinderMesh);
+
+
     const boxGeometry = new THREE.BoxGeometry(0.5, 0.5, 0.5);
     const boxMesh = new THREE.Mesh(boxGeometry, boxMat);
     boxMesh.position.set(-0.5, 0.25, -1);
