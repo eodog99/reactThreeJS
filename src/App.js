@@ -9,10 +9,9 @@ import Ani from "./comp/gsap/ex01"
 import './css/anistyle.css';
 import AniFrom from "./comp/gsap/ex02"
 import AniTime from "./comp/gsap/ex03"
-import Map from "./comp/map"
+import Map from "./Application/map"
 import Scene from "./comp/mouse" 
-import Player from "./comp/raycaster"
-import Ray from "./Application/raycaster"
+import Player from "./Application/raycaster"
 import FBXModelLoader from "./Application/FBXLoader"
 import LightProbeExample from './Application/LightProbe'
 import AmbientLight from "./comp/light/AmbientLight"
@@ -20,12 +19,13 @@ import AmbientLight1 from "./comp/light/AmbientLight1"
 import Line from "./Application/Line"
 import ModelLoader from "./comp/gltfLoader"
 import Point from "./Application/Point"
+import TexturedCube from "./comp/texture"
 
 
 function App() {
   return (
     <div className="App">
-     <ModelLoader></ModelLoader>
+     <TexturedCube></TexturedCube>
     </div>
   );
 }

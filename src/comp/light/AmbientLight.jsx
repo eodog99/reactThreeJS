@@ -17,17 +17,40 @@ function AmbientLight() {
     scene = new THREE.Scene();
 
     // 구체 도형 생성
-    const BoxGeometry = new THREE.BoxGeometry(3 , 3 , 3 );
-    const BoxMaterial = new THREE.MeshStandardMaterial({ color: 0xffffbb}); 
-    sphere = new THREE.Mesh(BoxGeometry, BoxMaterial);
+    const geometry = new THREE.SphereGeometry(1, 32, 32);  // 반지름 2, 세분화 수준 0
+   
+    //MeshBasicMaterial 재질
+    // const material = new THREE.MeshBasicMaterial({
+    //   color: 0x0077ff,  // 파란색
+    // });
 
+
+    //MeshLambertMaterial
+    // const material = new THREE.MeshLambertMaterial({
+    //   color: 0x0077ff,  // 파란색
+    // });
+    
+    //MeshPhongMaterial 재질
+    const material = new THREE.MeshPhongMaterial({
+      color: 0x0077ff,  // 파란색
+      shininess: 80,  // 반짝임 정도 설정
+    });
+
+
+
+    // MeshStanderdMaterial 재질
+     // const material = new THREE.MeshStandardMaterial(
+    //   {color : 0x0077ff, roughness: 0.5,metalness: 0.7}
+    // );
+    
+    const sphere = new THREE.Mesh(geometry, material);
     sphere.castShadow =true;
     scene.add(sphere);
 
-
-    // Ambient Light
-    //const AmbientLight = new THREE.AmbientLight(0xffffff, 0.4);
-    //scene.add(AmbientLight)
+    sphere.position.y = 1
+    // Ambient Light : 전체 장면에 균등하게 빛을 비추는 조명.
+    const AmbientLight = new THREE.AmbientLight(0xffffff, 1);
+    scene.add(AmbientLight)
 
     
     //PointLight(점광원)
@@ -46,7 +69,7 @@ function AmbientLight() {
     //  scene.add(DirectionalLight)
 
     // SpotLight : 특정방향으로 좁은 범위의 빛을 비추는 광원
-    const spotLight = new THREE.SpotLight(0xffffff, 100, 10);
+    const spotLight = new THREE.SpotLight(0xffffff, 100, 5);
     spotLight.position.set(1, 2, 3);  // 위치 설정
     spotLight.castShadow = true;  // 그림자 생성
     scene.add(spotLight);
@@ -74,7 +97,7 @@ function AmbientLight() {
         const floorGeometry = new THREE.PlaneGeometry(30, 30, 30);  // 바닥 크기 설정
         const floor = new THREE.Mesh(floorGeometry, floorMaterial);
         floor.rotation.x = -Math.PI / 2;  // 바닥이 수평이 되도록 회전
-        floor.position.y = -1
+        floor.position.y = 0
         floor.receiveShadow = true;
         scene.add(floor);
 

@@ -1,3 +1,5 @@
+
+
 import { useEffect, useRef } from 'react';
 import * as THREE from 'three';
 import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader'; 
@@ -19,7 +21,7 @@ function FBXModelLoader() {
     document.body.appendChild(renderer.domElement);
 
     // 조명 추가 : 기본 Ambient Light
-    const AmbientLight = new THREE.AmbientLight(0xffffff, 2);
+    const AmbientLight = new THREE.AmbientLight(0xffffff, 1);
     scene.add(AmbientLight);
 
     // 조명 추가: Point Light 추가
@@ -53,19 +55,22 @@ function FBXModelLoader() {
         // 모델이 로드되면 씬에 추가
         scene.add(object);
 
+        object.traverse((child)=> {
+          if (child.isMesh) {
+            child.castShadow = true;
+            child.receiveShadow = true;
+          }
+        });
+
         // objectRef.current에 객체를 저장
         objectRef.current = object;
 
         // 모델의 위치 및 크기 조정(필요시, 생략 가능)
         object.position.set(0, 0, 0);
         object.scale.set(0.05, 0.05, 0.05); // FBX 모델 크기 조정
-        object.castShadow = true; // 모델이 그림자를 생성하도록 설정
-        console.log("text1 : " + objectRef)
-        // Light의 target을 objectRef.current로 설정(정확한 대상지정..인데 왜 안뜰까!)
-        Light.target = objectRef.current;
       }
     );
-    console.log("text : " + objectRef)
+   
 
     // 카메라 위치 설정
     camera.position.x = 1;

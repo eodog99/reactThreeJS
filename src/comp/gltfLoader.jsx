@@ -21,7 +21,7 @@ function ModelLoader() {
     scene.add(ambientLight);
 
     // 조명 추가 : Directional Light 추가 (빛의 방향을 설정하여 그림자 효과 향상)
-    const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
+    const directionalLight = new THREE.PointLight(0xffffff, 1);
     directionalLight.position.set(5, 10, 5); // 빛의 방향 설정
     directionalLight.castShadow = true; // 그림자 생성 가능
     directionalLight.shadow.mapSize.width = 2048;  // 그림자 품질 향상
@@ -79,6 +79,7 @@ function ModelLoader() {
 
 
     // 카메라 위치 설정
+    camera.position.y = 2;
     camera.position.z = 4;
 
     // 애니메이션 루프

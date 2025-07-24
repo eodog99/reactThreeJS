@@ -1,5 +1,6 @@
 import { useRef, useEffect } from "react";
 import * as THREE from 'three';
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 
 function Line() {
   const selectCanvas3D = useRef();
@@ -31,9 +32,18 @@ function Line() {
     // 카메라 위치 설정
     camera.position.z = 5; // 카메라 z축 위치를 5로 설정
 
+
+        // OrbitControls 설정
+        const controls = new OrbitControls(camera, renderer.domElement);
+        controls.enableDamping = true;
+        controls.dampingFactor = 0.25;
+        controls.screenSpacePanning = false;
+
+
     // 애니메이션 루프
     function animate() {
       requestAnimationFrame(animate);
+      controls.update(); // OrbitControls 업데이트
       renderer.render(scene, camera);
     }
     animate();

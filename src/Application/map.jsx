@@ -78,12 +78,12 @@ function Map() {
           scene.add(fbx); // 씬에 모델 추가 
 
           
-
-
           mixer = new THREE.AnimationMixer(fbx); // 애니메이션 믹서 생성
           const clips = fbx.animations; // 모델의 애니메이션 클립 가져오기 
-          const clip = THREE.AnimationClip.findByName(clips, 'mixamo.com'); // 특정 애니메이션 찾기
+          // mixamo.com : 애니메이션 클립의 이름, 애니메이션의 이름이다 ....
+          const clip = THREE.AnimationClip.findByName(clips, 'mixamo.com'); // 특정 애니메이션 찾기 
           const action = mixer.clipAction(clip); // 애니메이션 액션 생성
+          action.timeScale = 2;
 
           action.play();  // 애니메이션 시작
         });

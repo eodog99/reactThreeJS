@@ -17,36 +17,46 @@ function AmbientLight1() {
     scene = new THREE.Scene();
 
     // 구체 도형 생성
-    const BoxGeometry = new THREE.BoxGeometry(3,3 , 3 );
-    const MeshStandardMaterial = new THREE.MeshStandardMaterial({ color: 0x000000}); 
-    Box = new THREE.Mesh(BoxGeometry, MeshStandardMaterial);
-    Box.position.y = 0;
-    Box.castShadow =true;
-    scene.add(Box);
-    
+    const BoxGeometry = new THREE.BoxGeometry(3 , 3 , 3 );
+    const BoxMaterial = new THREE.MeshStandardMaterial({ color: 0xffffbb}); 
+    sphere = new THREE.Mesh(BoxGeometry, BoxMaterial);
 
-
-    // 아래 네모 박스
-    const sphereGeometry = new THREE.SphereGeometry(0.25, 16, 8 );
-    const sphereMaterial = new THREE.MeshStandardMaterial({ color: 0xffffff}); 
-    sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
-    sphere.position.y = 4
     sphere.castShadow =true;
     scene.add(sphere);
 
 
-        // 조명 추가: 기본 Ambient Light
-        const AmbientLight = new THREE.AmbientLight(0xffffff, 0.4);
-        scene.add(AmbientLight)
+    // Ambient Light
+    const AmbientLight = new THREE.AmbientLight(0xffffff, 0.4);
+    scene.add(AmbientLight)
 
-        // 조명 추가 :
-        pointLight = new THREE.PointLight(0xffffff, 100, 17000, 2 ); // Ambient Light 추가
-        pointLight.position.set(2, 5, 1); // 빛의 위치 설정
-        // light.castShadow = true;
-        // light.shadow.mapSize.width = 2048;  // 그림자 해상도 증가 (기본값 512)
-        // light.shadow.mapSize.height = 2048; // 그림자 해상도 증가 (기본값 512)
+    
+    //PointLight(점광원)
+      //  pointLight = new THREE.PointLight(0xffffff, 100, 17 ); // PointLight 추가
+      //  pointLight.position.set(4, 4, 2); // 빛의 위치 설정
+      //  pointLight.castShadow = true;
+      //  pointLight.shadow.mapSize.width = 2048;  // 그림자 해상도 증가 (기본값 512)
+      //  pointLight.shadow.mapSize.height = 2048; // 그림자 해상도 증가 (기본값 512)
+      //  scene.add(pointLight);
 
-        scene.add(pointLight);
+
+    // DirectionalLight(방향광) 그림자 생성가능
+    //  const DirectionalLight = new THREE.DirectionalLight(0xffffff, 4);
+    //  DirectionalLight.position.set(2, 2, 5);  // 위치 설정
+    //  DirectionalLight.castShadow = true;  // 그림자 생성
+    //  scene.add(DirectionalLight)
+
+    // SpotLight : 특정방향으로 좁은 범위의 빛을 비추는 광원
+    // const spotLight = new THREE.SpotLight(0xffffff, 100, 10);
+    // spotLight.position.set(1, 2, 3);  // 위치 설정
+    // spotLight.castShadow = true;  // 그림자 생성
+    // scene.add(spotLight);
+    // spotLight.target = sphere;
+
+
+    //HemisphereLight
+    const hemisphereLight = new THREE.HemisphereLight(0x00ff00, 0x0000ff, 1);  // 하늘은 초록색, 땅은 파란색
+    scene.add(hemisphereLight);
+
 
         // 바닥 생성 및 텍스처 적용
         const textureLoader = new THREE.TextureLoader();
@@ -90,8 +100,7 @@ function AmbientLight1() {
       requestAnimationFrame(animate);
       orbitControls.update(); // OrbitControls 업데이트
 
-      // 카메라 위치에 따라 포인트 라이트 위치 조정
-      pointLight.position.set(camera.position.x, camera.position.y, camera.position.z);
+
 
 
       render();
